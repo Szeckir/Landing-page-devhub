@@ -2,6 +2,7 @@ import React from 'react';
 import devhub1 from './assets/devhub.jpg'
 import devhub2 from './assets/foto2.jpg'
 import devhub3 from './assets/primeirafoto.jpg'
+import devhub4 from './assets/foto.jpg'
 
 const App = () => {
   React.useEffect(() => {
@@ -57,14 +58,14 @@ const App = () => {
           </p>
           
           {/* Placeholder for second product image */}
-          <div className="w-full h-128 bg-gray-100 mb-12 rounded-lg">
-            <img src={devhub2} alt="DevHub Features" className="w-full h-full object-cover rounded-lg" />
+          <div className="w-full h-100 bg-gray-100 mb-12 rounded-lg">
+            <img src={devhub4} alt="DevHub Features" className="w-full h-full object-cover rounded-lg" />
           </div>
         </div>
         <div className='justify-center items-center text-center pt-5'>
             <a 
               href="https://pay.hotmart.com/J96549882U?checkoutMode=2" 
-              className="btn hotmart-fb bg-green-500 pr-12 pl-12 pt-4 pb-4 rounded-xl hover:bg-green-600 items-center"
+              className="btn hotmart-fb bg-green-500 pr-12 pl-12 pt-4 pb-4 rounded-xl hover:bg-green-600 items-center text-white"
               >Quero Acessar Agora
             </a>
           </div>
