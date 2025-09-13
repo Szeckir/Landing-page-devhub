@@ -192,7 +192,7 @@ const App = () => {
               <iframe 
                 width="100%" 
                 height="100%" 
-                src="https://www.youtube.com/watch?v=uknRtnWqpR8&ab_channel=Algoritmo%26Caf%C3%A9" 
+                src="https://www.youtube.com/embed/uknRtnWqpR8" 
                 title="Apresentação DevHub" 
                 frameBorder="0" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
