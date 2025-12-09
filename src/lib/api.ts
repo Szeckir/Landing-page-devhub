@@ -3,7 +3,9 @@
  * Todas as verificações de acesso devem passar pelo backend para segurança
  */
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+// Remove trailing slash if present
+const API_URL_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+const API_URL = API_URL_BASE.replace(/\/$/, ''); // Remove trailing slash
 
 interface CheckAccessResponse {
   hasAccess: boolean;
