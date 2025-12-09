@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import webhookRoutes from './routes/webhooks.js';
 import authRoutes from './routes/auth.js';
+import bulkUpdateRoutes from './routes/bulk-update.js';
 
 dotenv.config();
 
@@ -42,6 +43,9 @@ app.use('/api/auth', authRoutes);
 
 // Webhook routes
 app.use('/api/webhooks', webhookRoutes);
+
+// Bulk update routes (temporary endpoint)
+app.use('/api', bulkUpdateRoutes);
 
 // Start server apenas se não estiver rodando no Vercel
 // No Vercel, o servidor é iniciado automaticamente
