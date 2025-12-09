@@ -29,11 +29,22 @@ interface HotmartWebhookPayload {
     };
   };
   event?: string;
+  // Hotmart 2.0.0 pode enviar em formatos diferentes
+  buyer?: {
+    email?: string;
+  };
+  product?: {
+    id?: string;
+  };
 }
 
 /**
  * Webhook endpoint for Hotmart purchase notifications
  * POST /api/webhooks/hotmart
+ * 
+ * Suporta diferentes formatos de payload da Hotmart:
+ * - Formato 1: { data: { buyer: { email } } }
+ * - Formato 2: { buyer: { email } }
  */
 router.post('/hotmart', async (req: Request, res: Response) => {
   try {
@@ -41,9 +52,10 @@ router.post('/hotmart', async (req: Request, res: Response) => {
 
     console.log('Received Hotmart webhook:', JSON.stringify(payload, null, 2));
 
-    // Extract email from payload
-    // Hotmart webhook structure may vary, adjust according to your needs
-    const email = payload.data?.buyer?.email;
+    // Extract email from payload - suporta diferentes formatos
+    // Formato 1: payload.data.buyer.email (formato aninhado)
+    // Formato 2: payload.buyer.email (formato direto)
+    const email = payload.data?.buyer?.email || payload.buyer?.email;
 
     if (!email) {
       console.error('No email found in webhook payload');
