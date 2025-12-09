@@ -55,8 +55,6 @@ router.post('/hotmart', async (req: Request, res: Response) => {
   try {
     const payload: HotmartWebhookPayload = req.body;
 
-    console.log('Received Hotmart webhook:', JSON.stringify(payload, null, 2));
-
     // Extract email from payload - suporta diferentes formatos
     // Formato 1: payload.data.buyer.email (formato aninhado)
     // Formato 2: payload.buyer.email (formato direto)
@@ -81,7 +79,6 @@ router.post('/hotmart', async (req: Request, res: Response) => {
     const user = authUsers.users.find(u => u.email === email);
 
     if (!user) {
-      console.log(`User with email ${email} not found in auth.users. They will be created when they sign up.`);
       // Optionally, you could create a pending purchase record here
       return res.status(200).json({ 
         message: 'User not found in auth, will be processed on signup',
@@ -122,7 +119,6 @@ router.post('/hotmart', async (req: Request, res: Response) => {
           return res.status(500).json({ error: 'Error creating user record' });
         }
 
-        console.log(`✅ Created user record and granted access for ${email}`);
         return res.status(200).json({ 
           message: 'User created and access granted',
           user: newUser 
@@ -132,7 +128,6 @@ router.post('/hotmart', async (req: Request, res: Response) => {
       return res.status(500).json({ error: 'Error updating user purchase status' });
     }
 
-    console.log(`✅ Updated purchase status for user ${email}`);
     return res.status(200).json({ 
       message: 'Purchase status updated successfully',
       user: data 

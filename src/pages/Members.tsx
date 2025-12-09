@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { checkAccess } from '../lib/api';
 import { supabase } from '../lib/supabase';
@@ -107,12 +107,12 @@ const Members = () => {
               Você precisa adquirir o DevHub para acessar esta área. Após a compra, seu acesso será liberado automaticamente.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a 
-                href="https://pay.hotmart.com/J96549882U?checkoutMode=2" 
+              <Link 
+                to="/auth?redirect=checkout" 
                 className="btn-primary-lg inline-block"
               >
                 Comprar Agora
-              </a>
+              </Link>
               <button
                 onClick={() => window.location.reload()}
                 className="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-xl transition-colors"

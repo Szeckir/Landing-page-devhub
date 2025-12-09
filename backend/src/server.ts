@@ -51,7 +51,7 @@ app.use('/api', bulkUpdateRoutes);
 // No Vercel, o servidor é iniciado automaticamente
 if (process.env.VERCEL !== '1') {
   app.listen(PORT, () => {
-    console.log(`🚀 Server running on port ${PORT}`);
+    
   });
 }
 

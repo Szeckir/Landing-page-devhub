@@ -40,8 +40,6 @@ router.post('/bulk-update', async (req: Request, res: Response) => {
       return res.status(400).json({ error: 'emails must be a non-empty array' });
     }
 
-    console.log(`Starting bulk update for ${emails.length} emails`);
-
     const results = {
       success: [] as string[],
       notFound: [] as string[],
@@ -63,7 +61,6 @@ router.post('/bulk-update', async (req: Request, res: Response) => {
 
         if (!user) {
           results.notFound.push(email);
-          console.log(`User not found: ${email}`);
           continue;
         }
 
@@ -87,7 +84,6 @@ router.post('/bulk-update', async (req: Request, res: Response) => {
           results.errors.push({ email, error: error.message });
         } else {
           results.success.push(email);
-          console.log(`✅ Updated access for ${email}`);
         }
       } catch (error) {
         const errorMessage = error instanceof Error ? error.message : 'Unknown error';
@@ -95,8 +91,6 @@ router.post('/bulk-update', async (req: Request, res: Response) => {
         results.errors.push({ email, error: errorMessage });
       }
     }
-
-    console.log(`Bulk update completed: ${results.success.length} success, ${results.notFound.length} not found, ${results.errors.length} errors`);
 
     return res.status(200).json({
       message: 'Bulk update completed',

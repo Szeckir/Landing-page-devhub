@@ -171,12 +171,12 @@ const LandingPage = () => {
                 </Link>
               </li> */}
               <li>
-                <a 
-                  href="https://pay.hotmart.com/J96549882U?checkoutMode=2" 
+                <Link 
+                  to="/auth?redirect=checkout" 
                   className="btn-primary text-sm"
                 >
                   Comprar Agora
-                </a>
+                </Link>
               </li>
             </ul>
           </nav>
@@ -226,21 +226,21 @@ const LandingPage = () => {
                   FAQ
                 </a>
               </li>
-              <li>
+              {/* <li>
                 <Link 
                   to="/membros"
                   className="block text-white hover:text-[#4ADE80] transition-colors"
                 >
                   Área de Membros
                 </Link>
-              </li>
+              </li> */}
               <li>
-                <a 
-                  href="https://pay.hotmart.com/J96549882U?checkoutMode=2" 
+                <Link 
+                  to="/auth?redirect=checkout" 
                   className="btn-primary text-center block"
                 >
                   Comprar Agora
-                </a>
+                </Link>
               </li>
             </ul>
           </motion.nav>
@@ -313,12 +313,12 @@ const LandingPage = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.5 }}
             >
-              <a 
-                href="https://pay.hotmart.com/J96549882U?checkoutMode=2" 
+              <Link 
+                to="/auth?redirect=checkout" 
                 className="btn-primary-lg inline-block"
               >
                 QUERO ACESSAR AGORA
-              </a>
+              </Link>
             </motion.div>
 
             <motion.p
@@ -358,12 +358,12 @@ const LandingPage = () => {
                 Não perca esta oportunidade de ter acesso a milhares de recursos organizados
               </p>
             </div>
-            <a 
-              href="https://pay.hotmart.com/J96549882U?checkoutMode=2" 
+            <Link 
+              to="/auth?redirect=checkout" 
               className="btn-primary"
             >
               Garantir Agora
-            </a>
+            </Link>
           </div>
         </div>
       </section>
@@ -413,12 +413,12 @@ const LandingPage = () => {
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
             >
-              <a 
-                href="https://pay.hotmart.com/J96549882U?checkoutMode=2" 
+              <Link 
+                to="/auth?redirect=checkout" 
                 className="btn-primary-lg inline-block"
               >
                 Quero Acessar Agora
-              </a>
+              </Link>
             </motion.div>
           </motion.div>
         </div>
@@ -514,12 +514,12 @@ const LandingPage = () => {
             viewport={{ once: true }}
             transition={{ delay: 0.6 }}
           >
-            <a 
-              href="https://pay.hotmart.com/J96549882U?checkoutMode=2" 
+            <Link 
+              to="/auth?redirect=checkout" 
               className="btn-primary-lg inline-block"
             >
               Quero Ter Acesso a Tudo Isso
-            </a>
+            </Link>
           </motion.div>
         </div>
       </section>
@@ -562,12 +562,12 @@ const LandingPage = () => {
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
             >
-              <a 
-                href="https://pay.hotmart.com/J96549882U?checkoutMode=2" 
+              <Link 
+                to="/auth?redirect=checkout" 
                 className="btn-primary-lg inline-block"
               >
                 Quero as Anotações Agora
-              </a>
+              </Link>
             </motion.div>
           </motion.div>
         </div>
@@ -647,12 +647,12 @@ const LandingPage = () => {
               viewport={{ once: true }}
               transition={{ delay: 0.4 }}
             >
-              <a 
-                href="https://pay.hotmart.com/J96549882U?checkoutMode=2" 
+              <Link 
+                to="/auth?redirect=checkout" 
                 className="btn-primary-lg inline-block"
               >
                 Quero Fazer Parte Agora
-              </a>
+              </Link>
             </motion.div>
           </motion.div>
         </div>
@@ -706,12 +706,12 @@ const LandingPage = () => {
               viewport={{ once: true }}
               transition={{ delay: 0.8 }}
             >
-              <a 
-                href="https://pay.hotmart.com/J96549882U?checkoutMode=2" 
+              <Link 
+                to="/auth?redirect=checkout" 
                 className="btn-primary-lg inline-block"
               >
                 Sim, É Para Mim!
-              </a>
+              </Link>
             </motion.div>
           </motion.div>
         </div>
@@ -813,12 +813,12 @@ const LandingPage = () => {
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
             >
-              <a 
-                href="https://pay.hotmart.com/J96549882U?checkoutMode=2" 
+              <Link 
+                to="/auth?redirect=checkout" 
                 className="btn-primary-lg inline-block"
               >
                 QUERO ACESSAR AGORA
-              </a>
+              </Link>
             </motion.div>
 
             <motion.div
