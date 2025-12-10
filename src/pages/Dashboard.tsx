@@ -4,8 +4,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { FaSignOutAlt, FaUser, FaCog, FaUsers, FaRoute, FaBookOpen, FaLink } from 'react-icons/fa';
 
 const Dashboard = () => {
-  // Cole o link do YouTube aqui:
-  const YOUTUBE_VIDEO_URL = '';
+  const YOUTUBE_VIDEO_URL = 'https://youtu.be/DP2rIlW8GfU';
 
   const { user, signOut } = useAuth();
   const navigate = useNavigate();

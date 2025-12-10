@@ -162,14 +162,14 @@ const LandingPage = () => {
                   FAQ
                 </a>
               </li>
-              {/* <li>
+              <li>
                 <Link 
                   to="/membros"
                   className="text-white hover:text-[#4ADE80] transition-colors"
                 >
                   Área de Membros
                 </Link>
-              </li> */}
+              </li>
               <li>
                 <Link 
                   to="/auth?redirect=checkout" 
@@ -226,14 +226,14 @@ const LandingPage = () => {
                   FAQ
                 </a>
               </li>
-              {/* <li>
+              <li>
                 <Link 
                   to="/membros"
                   className="block text-white hover:text-[#4ADE80] transition-colors"
                 >
                   Área de Membros
                 </Link>
-              </li> */}
+              </li>
               <li>
                 <Link 
                   to="/auth?redirect=checkout" 

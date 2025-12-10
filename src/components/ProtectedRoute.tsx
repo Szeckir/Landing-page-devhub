@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { supabase } from '../lib/supabase';
+import { checkAccess } from '../lib/api';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -9,32 +9,24 @@ interface ProtectedRouteProps {
 }
 
 export const ProtectedRoute = ({ children, requirePurchase = true }: ProtectedRouteProps) => {
-  const { user, loading } = useAuth();
+  const { user, session, loading } = useAuth();
   const [hasPurchase, setHasPurchase] = useState<boolean | null>(null);
   const [checkingPurchase, setCheckingPurchase] = useState(true);
 
   useEffect(() => {
     const checkPurchase = async () => {
-      if (!user) {
+      if (!user || !session?.access_token) {
         setCheckingPurchase(false);
         return;
       }
 
       try {
-        const { data, error } = await supabase
-          .from('users')
-          .select('has_purchased_roadmap')
-          .eq('id', user.id)
-          .single();
-
-        if (error) {
-          console.error('Error checking purchase status:', error);
-          setHasPurchase(false);
-        } else {
-          setHasPurchase(data?.has_purchased_roadmap ?? false);
-        }
-      } catch (error) {
+        // Verificar acesso através da API backend (seguro)
+        const accessData = await checkAccess(session.access_token);
+        setHasPurchase(accessData.hasAccess);
+      } catch (error: any) {
         console.error('Error checking purchase:', error);
+        // Em caso de erro, negar acesso por segurança
         setHasPurchase(false);
       } finally {
         setCheckingPurchase(false);
@@ -42,7 +34,7 @@ export const ProtectedRoute = ({ children, requirePurchase = true }: ProtectedRo
     };
 
     checkPurchase();
-  }, [user]);
+  }, [user, session]);
 
   if (loading || checkingPurchase) {
     return (
