@@ -114,7 +114,7 @@ Recebe webhooks da Hotmart quando uma compra é aprovada.
   "user": {
     "id": "uuid",
     "email": "usuario@email.com",
-    "has_purchased_roadmap": true,
+    "has_purchased_devhub": true,
     "subscription_status": "active"
   }
 }
@@ -153,7 +153,7 @@ O backend espera uma tabela `users` no Supabase com a seguinte estrutura:
 CREATE TABLE users (
   id UUID REFERENCES auth.users(id) PRIMARY KEY,
   email TEXT UNIQUE NOT NULL,
-  has_purchased_roadmap BOOLEAN DEFAULT false,
+  has_purchased_devhub BOOLEAN DEFAULT false,
   subscription_status TEXT DEFAULT 'inactive',
   created_at TIMESTAMP DEFAULT NOW(),
   updated_at TIMESTAMP DEFAULT NOW()

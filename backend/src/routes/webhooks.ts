@@ -90,7 +90,7 @@ router.post('/hotmart', async (req: Request, res: Response) => {
     const { data, error } = await supabase
       .from('users')
       .update({ 
-        has_purchased_roadmap: true,
+        has_purchased_devhub: true,
         subscription_status: 'active',
         updated_at: new Date().toISOString()
       })
@@ -108,7 +108,7 @@ router.post('/hotmart', async (req: Request, res: Response) => {
           .insert({
             id: user.id,
             email: email,
-            has_purchased_roadmap: true,
+            has_purchased_devhub: true,
             subscription_status: 'active'
           })
           .select()

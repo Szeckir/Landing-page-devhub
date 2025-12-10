@@ -36,7 +36,7 @@ const Members = () => {
           try {
             const { data, error: dbError } = await supabase
               .from('users')
-              .select('has_purchased_roadmap')
+              .select('has_purchased_devhub')
               .eq('id', user.id)
               .single();
 
@@ -44,7 +44,7 @@ const Members = () => {
               console.error('Fallback query error:', dbError);
               setHasPurchase(false);
             } else {
-              setHasPurchase(data?.has_purchased_roadmap ?? false);
+              setHasPurchase(data?.has_purchased_devhub ?? false);
             }
           } catch (fallbackError) {
             console.error('Fallback failed:', fallbackError);
@@ -81,15 +81,6 @@ const Members = () => {
       <div className="min-h-screen bg-[#1B1C1D] flex items-center justify-center py-12 px-4">
         <div className="max-w-2xl mx-auto text-center">
           <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-8 border border-gray-700 shadow-2xl">
-            {backendError && (
-              <div className="mb-6 p-4 bg-yellow-900/20 border border-yellow-700/50 rounded-lg">
-                <p className="text-yellow-400 text-sm">
-                  ⚠️ <strong>Backend não disponível.</strong> Usando modo de desenvolvimento (menos seguro).
-                  <br />
-                  Para produção, inicie o backend: <code className="text-xs">cd backend && npm run dev</code>
-                </p>
-              </div>
-            )}
             <div className="mb-6">
               <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-red-900/20 mb-4">
                 <svg className="w-10 h-10 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">

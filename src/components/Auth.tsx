@@ -2,8 +2,9 @@ import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { supabase } from '../lib/supabase';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import HotmartCheckoutModal from './HotmartCheckoutModal';
 
 const customTheme = {
   ...ThemeSupa,
@@ -105,13 +106,13 @@ export const AuthComponent = () => {
   const { user, loading } = useAuth();
   const [searchParams] = useSearchParams();
   const redirectToCheckout = searchParams.get('redirect') === 'checkout';
-  const HOTMART_CHECKOUT_URL = 'https://pay.hotmart.com/J96549882U?checkoutMode=2';
+  const [showCheckoutModal, setShowCheckoutModal] = useState(false);
 
   useEffect(() => {
     if (!loading && user) {
       if (redirectToCheckout) {
-        // Redirecionar para Hotmart após autenticação bem-sucedida
-        window.location.href = HOTMART_CHECKOUT_URL;
+        // Abrir modal do Hotmart após autenticação bem-sucedida
+        setShowCheckoutModal(true);
       } else {
         // Comportamento padrão: redirecionar para área de membros
         navigate('/membros', { replace: true });
@@ -130,43 +131,121 @@ export const AuthComponent = () => {
     );
   }
 
+  const handleCloseModal = () => {
+    setShowCheckoutModal(false);
+    // Após fechar a modal, navegar para área de membros
+    navigate('/membros', { replace: true });
+  };
+
   return (
     <div className="min-h-screen bg-[#1B1C1D] flex items-center justify-center py-12 px-4">
       <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-2">
-            <span className="text-white">Bem-vindo ao </span>
-            <span className="text-gradient">DevHub</span>
-          </h1>
-          <p className="text-gray-300">Entre para acessar sua área de membros</p>
-        </div>
-        
-        <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-8 border border-gray-700 shadow-2xl">
-          <Auth
-            supabaseClient={supabase}
-            appearance={{ theme: customTheme }}
-            providers={['github']}
-            providerScopes={{
-              github: 'read:user user:email',
-            }}
-            theme="dark"
-            redirectTo={redirectToCheckout 
-              ? `${window.location.origin}/auth?redirect=checkout`
-              : `${window.location.origin}/membros`}
-            onlyThirdPartyProviders={false}
-            localization={portugueseLocalization}
-          />
-        </div>
-        
-        <div className="mt-6 text-center">
-          <p className="text-gray-400 text-sm">
-            Ao entrar, você concorda com nossos{' '}
-            <a href="#" className="text-[#4ADE80] hover:underline">Termos de Uso</a>
-            {' '}e{' '}
-            <a href="#" className="text-[#4ADE80] hover:underline">Política de Privacidade</a>
-          </p>
-        </div>
+        {/* Show different content based on checkout flow */}
+        {user && redirectToCheckout ? (
+          /* Checkout Flow - User is logged in and needs to pay */
+          <div className="text-center">
+            <div className="mb-8">
+              <h1 className="text-4xl font-bold mb-2">
+                <span className="text-white">Parabéns pelo </span>
+                <span className="text-gradient">Cadastro!</span>
+              </h1>
+              <p className="text-gray-300">Agora finalize seu pagamento para acessar o DevHub</p>
+            </div>
+            
+            <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-8 border border-gray-700 shadow-2xl">
+              <div className="mb-6">
+                <div className="w-20 h-20 bg-[#4ADE80]/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-10 h-10 text-[#4ADE80]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <p className="text-white font-semibold text-lg mb-2">Conta criada com sucesso!</p>
+                <p className="text-gray-400 text-sm">
+                  Email: <span className="text-[#4ADE80]">{user.email}</span>
+                </p>
+              </div>
+              
+              <button
+                onClick={() => setShowCheckoutModal(true)}
+                className="w-full bg-gradient-to-r from-[#4ADE80] to-[#22c55e] text-black font-bold py-4 px-6 rounded-xl hover:from-[#22c55e] hover:to-[#16a34a] transition-all duration-300 transform hover:scale-[1.02] shadow-lg shadow-[#4ADE80]/20"
+              >
+                🚀 Finalizar Pagamento - R$ 19,90
+              </button>
+              
+              <button
+                onClick={() => navigate('/membros', { replace: true })}
+                className="mt-4 text-gray-400 hover:text-white text-sm transition-colors"
+              >
+                Ir para área de membros →
+              </button>
+            </div>
+          </div>
+        ) : (
+          /* Normal Auth Flow */
+          <>
+            <div className="text-center mb-8">
+              <h1 className="text-4xl font-bold mb-2">
+                <span className="text-white">Bem-vindo ao </span>
+                <span className="text-gradient">DevHub</span>
+              </h1>
+              <p className="text-gray-300">
+                {redirectToCheckout 
+                  ? 'Crie sua conta para finalizar a compra' 
+                  : 'Entre para acessar sua área de membros'}
+              </p>
+            </div>
+            
+            {/* Important notice for checkout flow */}
+            {redirectToCheckout && (
+              <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4 mb-6">
+                <div className="flex items-start gap-3">
+                  <span className="text-amber-400 text-xl">⚠️</span>
+                  <div>
+                    <p className="text-amber-400 font-semibold text-sm mb-1">Importante!</p>
+                    <p className="text-gray-300 text-sm">
+                      Use o <strong className="text-white">mesmo email</strong> no cadastro e no pagamento 
+                      para liberar seu acesso automaticamente.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+            
+            <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-8 border border-gray-700 shadow-2xl">
+              <Auth
+                supabaseClient={supabase}
+                appearance={{ theme: customTheme }}
+                providers={['github']}
+                providerScopes={{
+                  github: 'read:user user:email',
+                }}
+                theme="dark"
+                redirectTo={redirectToCheckout 
+                  ? `${window.location.origin}/auth?redirect=checkout`
+                  : `${window.location.origin}/membros`}
+                onlyThirdPartyProviders={false}
+                localization={portugueseLocalization}
+              />
+            </div>
+            
+            <div className="mt-6 text-center">
+              <p className="text-gray-400 text-sm">
+                Ao entrar, você concorda com nossos{' '}
+                <a href="#" className="text-[#4ADE80] hover:underline">Termos de Uso</a>
+                {' '}e{' '}
+                <a href="#" className="text-[#4ADE80] hover:underline">Política de Privacidade</a>
+              </p>
+            </div>
+          </>
+        )}
       </div>
+      
+      {/* Hotmart Checkout Modal */}
+      <HotmartCheckoutModal
+        isOpen={showCheckoutModal}
+        onClose={handleCloseModal}
+        userEmail={user?.email || ''}
+      />
     </div>
   );
 };

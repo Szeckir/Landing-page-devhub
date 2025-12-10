@@ -70,7 +70,7 @@ router.post('/bulk-update', async (req: Request, res: Response) => {
           .upsert({
             id: user.id,
             email: email,
-            has_purchased_roadmap: true,
+            has_purchased_devhub: true,
             subscription_status: 'active',
             updated_at: new Date().toISOString(),
           }, {

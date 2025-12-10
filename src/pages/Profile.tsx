@@ -39,7 +39,7 @@ const Profile = () => {
           try {
             const { data, error: dbError } = await supabase
               .from('users')
-              .select('email, has_purchased_roadmap, subscription_status')
+              .select('email, has_purchased_devhub, subscription_status')
               .eq('id', user.id)
               .single();
 
@@ -53,7 +53,7 @@ const Profile = () => {
             } else {
               setUserData({
                 email: data?.email || user.email || '',
-                hasPurchased: data?.has_purchased_roadmap ?? false,
+                hasPurchased: data?.has_purchased_devhub ?? false,
                 subscriptionStatus: data?.subscription_status || 'inactive'
               });
             }
@@ -111,16 +111,6 @@ const Profile = () => {
             <FaArrowLeft />
             <span>Voltar</span>
           </button>
-
-          {backendError && (
-            <div className="mb-6 p-4 bg-yellow-900/20 border border-yellow-700/50 rounded-lg">
-              <p className="text-yellow-400 text-sm">
-                ⚠️ <strong>Backend não disponível.</strong> Usando modo de desenvolvimento (menos seguro).
-                <br />
-                Para produção, inicie o backend: <code className="text-xs bg-gray-800 px-2 py-1 rounded">cd backend && npm run dev</code>
-              </p>
-            </div>
-          )}
 
           <div className="mb-8">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">

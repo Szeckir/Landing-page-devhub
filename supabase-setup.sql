@@ -7,7 +7,7 @@
 CREATE TABLE IF NOT EXISTS public.users (
   id UUID REFERENCES auth.users(id) ON DELETE CASCADE PRIMARY KEY,
   email TEXT UNIQUE NOT NULL,
-  has_purchased_roadmap BOOLEAN DEFAULT false,
+  has_purchased_devhub BOOLEAN DEFAULT false,
   subscription_status TEXT DEFAULT 'inactive',
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
@@ -29,7 +29,7 @@ CREATE POLICY "Users can read own data"
   USING (auth.uid() = id);
 
 -- 5. REMOVIDO: Usuários NÃO podem atualizar seus próprios dados diretamente
--- Apenas o backend (via Service Role Key) pode atualizar has_purchased_roadmap
+-- Apenas o backend (via Service Role Key) pode atualizar has_purchased_devhub
 -- Isso previne manipulação de dados sensíveis pelo frontend
 
 -- 6. Criar função para sincronizar usuários quando criarem conta
@@ -70,6 +70,6 @@ CREATE INDEX IF NOT EXISTS idx_users_email ON public.users(email);
 
 -- 11. Comentários nas colunas (opcional, mas útil)
 COMMENT ON TABLE public.users IS 'Tabela de usuários com status de compra e assinatura';
-COMMENT ON COLUMN public.users.has_purchased_roadmap IS 'Indica se o usuário comprou o roadmap/DevHub';
+COMMENT ON COLUMN public.users.has_purchased_devhub IS 'Indica se o usuário comprou o DevHub';
 COMMENT ON COLUMN public.users.subscription_status IS 'Status da assinatura: inactive, active, cancelled';
 

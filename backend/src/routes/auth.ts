@@ -55,7 +55,7 @@ router.post('/check-access', async (req: Request, res: Response) => {
     // Buscar dados do usuário usando Service Role (bypass RLS)
     const { data: userData, error: dbError } = await supabaseAdmin
       .from('users')
-      .select('has_purchased_roadmap, subscription_status')
+      .select('has_purchased_devhub, subscription_status')
       .eq('id', user.id)
       .single();
 
@@ -67,10 +67,10 @@ router.post('/check-access', async (req: Request, res: Response) => {
           .insert({
             id: user.id,
             email: user.email || '',
-            has_purchased_roadmap: false,
+            has_purchased_devhub: false,
             subscription_status: 'inactive'
           })
-          .select('has_purchased_roadmap, subscription_status')
+          .select('has_purchased_devhub, subscription_status')
           .single();
 
         if (createError) {
@@ -91,8 +91,8 @@ router.post('/check-access', async (req: Request, res: Response) => {
 
     // Retornar apenas informações necessárias (não expor dados sensíveis)
     return res.json({
-      hasAccess: userData?.has_purchased_roadmap === true,
-      hasPurchased: userData?.has_purchased_roadmap === true,
+      hasAccess: userData?.has_purchased_devhub === true,
+      hasPurchased: userData?.has_purchased_devhub === true,
       subscriptionStatus: userData?.subscription_status || 'inactive'
     });
 
@@ -133,7 +133,7 @@ router.post('/user-data', async (req: Request, res: Response) => {
 
     const { data: userData, error: dbError } = await supabaseAdmin
       .from('users')
-      .select('email, has_purchased_roadmap, subscription_status')
+      .select('email, has_purchased_devhub, subscription_status')
       .eq('id', user.id)
       .single();
 
@@ -144,7 +144,7 @@ router.post('/user-data', async (req: Request, res: Response) => {
     // Retornar apenas dados necessários para exibição
     return res.json({
       email: userData?.email || user.email,
-      hasPurchased: userData?.has_purchased_roadmap === true,
+      hasPurchased: userData?.has_purchased_devhub === true,
       subscriptionStatus: userData?.subscription_status || 'inactive'
     });
 
